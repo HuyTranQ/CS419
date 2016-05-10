@@ -84,6 +84,7 @@ void Dictionary::construct_models()
 			float tf_idf = jt->frequency * idf;
 			document_[jt->document].model[counter] = tf_idf;
 			norm_[jt->document] = tf_idf * tf_idf;
+			++counter;
 		}
 	}
 
