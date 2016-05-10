@@ -16,31 +16,37 @@ TokenNode::TokenNode()
 {
 }
 
-bool insert(TokenNode & node , Token::const_iterator const & it , Token::const_iterator const & end)
+bool insert(TokenNode & node , Token::const_iterator & it , Token::const_iterator const & end)
 {
 	if (it != end)
-		return insert(node.child_[*it] , it + 1 , end);
+	{
+		auto & value = *it;
+		return insert(node.child_[value] , ++it , end);
+	}
 	bool new_token = false;
 	if (node.token == false)
 		node.token = new_token = true;
 	return new_token;
 }
 
-bool exists(TokenNode const & node , Token::const_iterator const & it , Token::const_iterator const & end)
+bool exists(TokenNode const & node , Token::const_iterator & it , Token::const_iterator const & end)
 {
 	if (it == end)
 		return node.token;
-	if (node.child_.find(*it) == node.child_.end())
+	auto & value = *it;
+	if (node.child_.find(value) == node.child_.end())
 		return false;
-	return exists(node.child_.at(*it) , it + 1 , end);
+	return exists(node.child_.at(value) , ++it , end);
 }
 
-size_t max_match(TokenNode const & node , Token::const_iterator const & it , Token::const_iterator const & end , size_t index)
+size_t max_match(TokenNode const & node , Token::const_iterator & it , Token::const_iterator const & end , size_t index)
 {
-	if (it == end ||
-		node.child_.find(*it) == node.child_.cend())
+	if (it == end)
 		return node.token ? index : 0;
-	size_t result = max_match(node.child_.at(*it) , it + 1 , end , index + 1);
+	auto & value = *it;
+	if (node.child_.find(value) == node.child_.cend())
+		return node.token ? index : 0;
+	size_t result = max_match(node.child_.at(value) , ++it , end , index + 1);
 	if (result > 0)
 		return result;
 	else
@@ -64,7 +70,7 @@ bool InvertedNode::insert(unsigned long long document)
 	if (posting_ == nullptr)
 	{
 		new_token = true;
-		posting_ = make_shared<PostingList>();
+		posting_ = new PostingList();
 		posting_->push_back(Posting(document));
 	}
 	else if (posting_->back().document != document)
@@ -74,25 +80,34 @@ bool InvertedNode::insert(unsigned long long document)
 	return new_token;
 }
 
-std::shared_ptr<PostingList const> const & InvertedNode::posting_list() const
+InvertedNode::~InvertedNode()
+{
+	delete posting_;
+}
+
+PostingList const * InvertedNode::posting_list() const
 {
 	return posting_;
 }
 
 bool insert(InvertedNode & node , unsigned long long document , 
-			Token::const_iterator const & it , Token::const_iterator const & end)
+			Token::const_iterator & it , Token::const_iterator const & end)
 {
 	if (it == end)
 		return node.insert(document);
 	else
-		return insert(node.child_[*it] , document , it + 1 , end);
+	{
+		auto & value = *it;
+		return insert(node.child_[value] , document , ++it , end);
+	}
 }
 
-InvertedNode const * retrieve(InvertedNode const & node , Token::const_iterator const & it , Token::const_iterator const & end)
+InvertedNode const * retrieve(InvertedNode const & node , Token::const_iterator & it , Token::const_iterator const & end)
 {
 	if (it == end)
 		return (node.posting_->empty()) ? nullptr : &node;
-	if (node.child_.find(*it) == node.child_.end())
+	auto & value = *it;
+	if (node.child_.find(value) == node.child_.end())
 		return nullptr;
-	return retrieve(node.child_.at(*it) , it + 1 , end);
+	return retrieve(node.child_.at(value) , ++it , end);
 }

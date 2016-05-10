@@ -111,7 +111,7 @@ void InvertedIndex::insert(Token const & token , unsigned long long document)
 	insert(token.cbegin() , token.cend() , document);
 }
 
-void InvertedIndex::insert(Token::const_iterator const & it , Token::const_iterator const & end , unsigned long long document)
+void InvertedIndex::insert(Token::const_iterator & it , Token::const_iterator const & end , unsigned long long document)
 {
 	if (::insert(root , document , it , end))
 		++inverted_size;
@@ -127,12 +127,12 @@ InvertedNode const * InvertedIndex::operator[](Token const & token) const
 	return ::retrieve(root , token.cbegin() , token.cend());
 }
 
-InvertedNode * InvertedIndex::at(Token::const_iterator const & it , Token::const_iterator const & end)
+InvertedNode * InvertedIndex::at(Token::const_iterator & it , Token::const_iterator const & end)
 {
 	return const_cast<InvertedNode *>(static_cast<InvertedIndex const &>(*this).at(it , end));
 }
 
-InvertedNode const * InvertedIndex::at(Token::const_iterator const & it , Token::const_iterator const & end) const
+InvertedNode const * InvertedIndex::at(Token::const_iterator & it , Token::const_iterator const & end) const
 {
 	return ::retrieve(root , it , end);
 }

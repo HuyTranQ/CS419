@@ -53,15 +53,15 @@ public:
 
 	//	Insert a token in the list
 	void insert(Token const & token);
-	void insert(Token::const_iterator const & it , Token::const_iterator const & end);
+	void insert(Token::const_iterator & it , Token::const_iterator const & end);
 
 	//	Check if a token in the list
 	bool exists(Token const & token) const;
-	bool exists(Token::const_iterator const & it , Token::const_iterator const & end) const;
+	bool exists(Token::const_iterator & it , Token::const_iterator const & end) const;
 
 	//	Maximum matching
 	size_t max_match(Token const & token) const;
-	size_t max_match(Token::const_iterator const & it , Token::const_iterator const & end) const;
+	size_t max_match(Token::const_iterator & it , Token::const_iterator const & end) const;
 
 	//	Size of the token container
 	size_t size() const;

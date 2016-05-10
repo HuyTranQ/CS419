@@ -93,7 +93,7 @@ Tokenizer::Tokenizer()
 
 		while (it != endit)
 		{
-			vector<wstring> token;
+			Token token;
 			while (true)
 			{
 				auto begin = it;
@@ -133,7 +133,7 @@ unsigned Tokenizer::merge(std::string const & path , InvertedIndex & inverted_in
 	if (it == nullptr || endit == nullptr || it == endit)
 		return document_id;
 
-	vector<wstring> token;
+	Token token;
 
 	auto not_character = character_.end();
 	auto not_delimiter = delimiter_.end();
@@ -201,7 +201,11 @@ unsigned Tokenizer::merge(std::string const & path , InvertedIndex & inverted_in
 					break;
 				else
 				{
-					token = Token(token.cbegin() + counter, token.cend());
+					do
+					{
+						token.pop_front();
+						--counter;
+					} while (counter > 0);
 					if (token.empty())
 						break;
 				}
@@ -212,14 +216,20 @@ unsigned Tokenizer::merge(std::string const & path , InvertedIndex & inverted_in
 			if (counter > 0)
 			{	//	If there is a token in vocabulary, insert it
 				inverted_index.insert(token.cbegin() , token.cbegin() + counter , document_id);
-				token = Token(token.cbegin() + counter , token.cend());
+				//token = Token(token.cbegin() + counter , token.cend());
+				do
+				{
+					token.pop_front();
+					--counter;
+				} while (counter > 0);
 			}
 			else
 			{	//	Otherwise, only insert the first word
 				inverted_index.insert(token.cbegin() , token.cbegin() + 1 , document_id);
-				token = Token(token.cbegin() + 1 , token.cend());
+				//token = Token(token.cbegin() + 1 , token.cend());
+				token.pop_front();
 			}
-		} while (separated && !token.empty());
+		} while (separated);
 	}
 	reader.close();
 	return document_id;

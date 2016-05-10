@@ -18,7 +18,7 @@ public:
 
 	Dictionary();
 	void learn_document(boost::filesystem::directory_iterator const & file);
-	void construct_models(std::wofstream & output);
+	void construct_models();
 	void print(std::wofstream & output);
 	
 private:

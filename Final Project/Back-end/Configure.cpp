@@ -29,7 +29,9 @@ void insert_document(directory_iterator & it)
 	while (it != endit)
 	{
 		if (is_regular_file(it->path()))
+		{
 			Dictionary::open().learn_document(it);
+		}
 		else if (is_directory(it->path()))
 			insert_document(directory_iterator(it->path()));
 		++it;
@@ -60,7 +62,7 @@ void initialize(std::string const & corpus_path)
 	finish = high_resolution_clock::now();
 	cout << "Writing inverted index to file: " << duration_cast<milliseconds>(finish - start).count() << "ms\n";
 	start = high_resolution_clock::now();
-	Dictionary::open().construct_models(output);
+	Dictionary::open().construct_models();
 	finish = high_resolution_clock::now();
 	cout << "Construct models: " << duration_cast<milliseconds>(finish - start).count() << "ms\n";
 }

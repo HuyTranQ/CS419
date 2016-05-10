@@ -23,7 +23,7 @@ Dictionary::Dictionary()
 	auto endit = reinterpret_cast<wchar const *>(reader.const_end());
 	while (it != endit)
 	{
-		vector<wstring> token;
+		Token token;
 		while (true)
 		{
 			auto begin = it;
@@ -64,7 +64,7 @@ void Dictionary::print(std::wofstream & output)
 	}
 }
 
-void Dictionary::construct_models(std::wofstream & output)
+void Dictionary::construct_models()
 {
 	unordered_map<unsigned , float> norm_;
 	norm_.reserve(document_.size());
@@ -76,7 +76,7 @@ void Dictionary::construct_models(std::wofstream & output)
 		InvertedNode * node = inverted_index[it.token()];
 		if (node == nullptr)
 			continue;
-		std::shared_ptr<PostingList const> const & posting_ = node->posting_list();
+		PostingList const * posting_ = node->posting_list();
 		float idf = log10f((float) (document_.size() + 1) / (float) (posting_->size() + 1));
 		size_t counter = 0;
 		for (auto jt = posting_->cbegin() , endjt = posting_->cend(); jt != endjt; ++jt)
@@ -94,11 +94,7 @@ void Dictionary::construct_models(std::wofstream & output)
 		{
 			float norm = sqrtf(norm_.at(it->first));
 			for (int i = 0; i < (1 << 13); ++i)
-			{
 				model[i] /= norm;
-				output << model[i] << L' ';
-			}
-			output << L'\n';
 		}
 	}
 }

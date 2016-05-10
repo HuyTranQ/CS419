@@ -55,17 +55,17 @@ class InvertedIndex
 public:
 
 	void insert(Token const & token , unsigned long long document);
-	void insert(Token::const_iterator const & it , Token::const_iterator const & end ,
+	void insert(Token::const_iterator & it , Token::const_iterator const & end ,
 				unsigned long long document);
 
 	InvertedNode * operator[](Token const & token);
 
 	InvertedNode const * operator[](Token const & token) const;
 
-	InvertedNode * at(Token::const_iterator const & it ,
+	InvertedNode * at(Token::const_iterator & it ,
 					  Token::const_iterator const & end);
 
-	InvertedNode const * at(Token::const_iterator const & it ,
+	InvertedNode const * at(Token::const_iterator & it ,
 							Token::const_iterator const & end) const;
 
 	InvertedIterator iterator();

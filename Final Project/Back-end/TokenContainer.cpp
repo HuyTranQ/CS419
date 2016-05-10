@@ -106,7 +106,7 @@ void TokenContainer::insert(Token const & token)
 	insert(token.cbegin() , token.cend());
 }
 
-void TokenContainer::insert(Token::const_iterator const & it , Token::const_iterator const & end)
+void TokenContainer::insert(Token::const_iterator & it , Token::const_iterator const & end)
 {
 	if (::insert(root , it , end))
 		++container_size;
@@ -117,7 +117,7 @@ bool TokenContainer::exists(Token const & token) const
 	return exists(token.cbegin() , token.cend());
 }
 
-bool TokenContainer::exists(Token::const_iterator const & it , Token::const_iterator const & end) const
+bool TokenContainer::exists(Token::const_iterator & it , Token::const_iterator const & end) const
 {
 	return ::exists(root , it , end);
 }
@@ -127,7 +127,7 @@ size_t TokenContainer::max_match(Token const & token) const
 	return max_match(token.cbegin() , token.cend());
 }
 
-size_t TokenContainer::max_match(Token::const_iterator const & it , Token::const_iterator const & end) const
+size_t TokenContainer::max_match(Token::const_iterator & it , Token::const_iterator const & end) const
 {
 	return ::max_match(root , it , end , 0);
 }

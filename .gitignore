@@ -4,6 +4,9 @@
 # Ignore corpus
 corpus/
 
+# Ignore output
+*terms.txt
+
 # User-specific files
 *.suo
 *.user
