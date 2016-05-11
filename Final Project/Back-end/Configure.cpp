@@ -1,4 +1,4 @@
-#include "Configure.hpp"
+﻿#include "Configure.hpp"
 #include "Dictionary.hpp"
 
 #include <boost\filesystem.hpp>

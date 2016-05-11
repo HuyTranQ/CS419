@@ -105,7 +105,7 @@ bool insert(InvertedNode & node , unsigned long long document ,
 InvertedNode const * retrieve(InvertedNode const & node , Token::const_iterator & it , Token::const_iterator const & end)
 {
 	if (it == end)
-		return (node.posting_->empty()) ? nullptr : &node;
+		return (node.posting_ == nullptr || node.posting_->empty()) ? nullptr : &node;
 	auto & value = *it;
 	if (node.child_.find(value) == node.child_.end())
 		return nullptr;
