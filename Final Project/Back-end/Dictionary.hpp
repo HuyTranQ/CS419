@@ -13,7 +13,7 @@
 #include <map>
 #include <iostream>
 
-using DocumentSet = std::unordered_map<unsigned , Document>;
+using DocumentSet = std::unordered_map<unsigned, Document>;
 
 class RetrievalResult;
 
@@ -27,8 +27,9 @@ public:
 	void construct_models();
 	void print(std::wofstream & output);
 	RetrievalResult retrieve_documents(std::string const & path);
+	EvaluationResult evaluate_result(const RetrievalResult& rr);
 	std::string const & document_name(unsigned const & id);
-	
+
 private:
 	Tokenizer tokenizer;
 	DocumentSet document_;
@@ -50,4 +51,15 @@ private:
 	std::vector<unsigned> unranked_retrieved_document_;
 	std::unordered_set<unsigned> relevant_document_;
 	long long retrieval_time;
+};
+
+class EvaluationResult
+{
+	friend class Dictionary;
+public:
+	std::vector<std::pair<float, float>> get_prec_recall();
+	float get_f_measure();
+private:
+	std::vector<std::pair<float, float>> prec_recall_;
+	float f_measure;
 };
