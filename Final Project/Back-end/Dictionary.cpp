@@ -191,22 +191,21 @@ void RetrievalResult::print(ostream & output)
 EvaluationResult Dictionary::evaluate_result(const RetrievalResult& rr)
 {
 	EvaluationResult er;
-	for (int i = 1; i <= rr.unranked_retrieved_document_.size(); ++i)
+	int n_retrieved_relevant = 0;
+	auto it = rr.ranked_retrieved_document_.begin();
+
+	for (int i = 1; i <= rr.ranked_retrieved_document_.size(); ++i, ++it)
 	{
 		float prec = 0;
 		float recall = 0;
-		int n_retrieved_relevant = 0;
-
+		
 		/* Calculate number of retrieved and relevant docs */
-		for (int j = 0; j < i; ++j)
-		{
-			if (rr.relevant_document_.count(rr.unranked_retrieved_document_[j]) != 0)
-				++n_retrieved_relevant;
-		}
+		if (rr.relevant_document_.count(it->second) != 0)
+			++n_retrieved_relevant;
 
 		/* Calculate precision and recall for each level */
-		prec = (float)n_retrieved_relevant / i;
-		recall = (float)n_retrieved_relevant / rr.relevant_document_.size();
+		prec = (float)n_retrieved_relevant / (float)i;
+		recall = (float)n_retrieved_relevant / (float)rr.relevant_document_.size();
 
 		er.prec_recall_.push_back(std::make_pair(prec, recall));
 	}
