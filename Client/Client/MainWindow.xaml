@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        ResizeMode="NoResize"
+        Title="Home" Height="114.522" Width="525">
     <Grid>
-        
+        <Label x:Name="label" Content="Directory" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tboxDirPath" HorizontalAlignment="Left" Height="23" Margin="73,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="354" IsReadOnly="True"/>
+        <Button x:Name="btnBrowse" Content="_Browse" HorizontalAlignment="Left" Margin="432,16,0,0" VerticalAlignment="Top" Width="75" Click="btnBrowse_Click"/>
+        <TextBox x:Name="tboxQuery" HorizontalAlignment="Left" Height="23" Margin="73,44,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="354"/>
+            <Label x:Name="label1" Content="Query" HorizontalAlignment="Left" Margin="26,41,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnSubmit" Content="_Submit" HorizontalAlignment="Left" Margin="432,50,0,0" VerticalAlignment="Top" Width="75" Click="btnSubmit_Click"
+                IsDefault="True"/>
     </Grid>
 </Window>
