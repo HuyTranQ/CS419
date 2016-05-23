@@ -5,8 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="Result" Height="318.75" Width="536.029">
+        ResizeMode="NoResize"
+        Title="Result" Height="409.191" Width="563.574">
     <Grid>
-
+        <Label x:Name="label" Content="Time (ms):" HorizontalAlignment="Left" Margin="391,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label1" Content="Precision:" HorizontalAlignment="Left" Margin="7,6,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="tBlockPrecision" HorizontalAlignment="Left" Margin="67,11,0,0" TextWrapping="Wrap" Text="0.78695" VerticalAlignment="Top"/>
+        <Label x:Name="label2" Content="Recall:" HorizontalAlignment="Left" Margin="217,9,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="tBlockRecal" HorizontalAlignment="Left" Margin="260,14,0,0" TextWrapping="Wrap" Text="0.12356" VerticalAlignment="Top" RenderTransformOrigin="-5.672,0.061"/>
+        <TextBlock x:Name="tBlocTime" HorizontalAlignment="Left" Margin="460,16,0,0" TextWrapping="Wrap" Text="0.12356" VerticalAlignment="Top" RenderTransformOrigin="-5.672,0.061"/>
+        <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Height="319" Width="528" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Doc ID" CanUserSort="False" CanUserReorder="False" Width="100"/>
+                <DataGridTextColumn Binding="{x:Null}" CanUserSort="False" CanUserResize="False" ClipboardContentBinding="{x:Null}" Header="Doc Name" CanUserReorder="False" Width="300"/>
+                <DataGridTextColumn Binding="{x:Null}" CanUserResize="False" ClipboardContentBinding="{x:Null}" Header="Similarity" Width="105"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

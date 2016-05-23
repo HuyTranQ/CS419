@@ -25,7 +25,6 @@ namespace Client
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
-            //   tboxQuery.Focus();
             btnBrowse.Focus();
         }
 
@@ -64,6 +63,9 @@ namespace Client
             {
                 /* Valid cases */
 
+                /* Show the result */
+                ResultWindow resultWindow = new ResultWindow();
+                resultWindow.ShowDialog();
             }
         }
     }

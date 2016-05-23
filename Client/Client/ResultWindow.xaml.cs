@@ -21,6 +21,7 @@ namespace Client
     {
         public ResultWindow()
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
         }
     }
