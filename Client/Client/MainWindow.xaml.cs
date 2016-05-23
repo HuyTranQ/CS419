@@ -25,7 +25,8 @@ namespace Client
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
-            tboxQuery.Focus();
+            //   tboxQuery.Focus();
+            btnBrowse.Focus();
         }
 
         private String dirPath = "";
