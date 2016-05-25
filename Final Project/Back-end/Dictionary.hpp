@@ -16,6 +16,7 @@
 using DocumentSet = std::unordered_map<unsigned, Document>;
 
 class RetrievalResult;
+class EvaluationResult;
 
 class Dictionary
 {
