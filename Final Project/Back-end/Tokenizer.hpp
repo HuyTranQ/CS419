@@ -16,6 +16,7 @@ class Tokenizer
 public:
 	Tokenizer();
 	unsigned merge(std::string const & path , InvertedIndex & inverted_index);
+	void execute(wchar const * document , wchar const * end , InvertedIndex & inverted_index , unsigned document_id);
 private:
 	std::unordered_set<wchar> delimiter_;
 	std::unordered_map<wchar , wchar> const character_;

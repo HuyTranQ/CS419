@@ -27,9 +27,9 @@ public:
 	void learn_document(boost::filesystem::directory_iterator const & file);
 	void construct_models();
 	void print(std::wofstream & output);
-	RetrievalResult retrieve_documents(std::string const & path);
+	RetrievalResult retrieve_documents(wchar const * query , wchar const * end);
 	EvaluationResult evaluate_result(const RetrievalResult& rr);
-	std::string const & document_name(unsigned const & id);
+	std::wstring const & document_name(unsigned const & id);
 
 private:
 	Tokenizer tokenizer;
@@ -43,6 +43,7 @@ private:
 */
 class RetrievalResult
 {
+	friend class NamedPipeServer;
 public:
 	friend class Dictionary;
 	void print(std::ostream & output);

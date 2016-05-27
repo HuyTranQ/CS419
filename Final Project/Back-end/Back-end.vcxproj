@@ -150,6 +150,7 @@
     <ClInclude Include="Dictionary.hpp" />
     <ClInclude Include="Document.hpp" />
     <ClInclude Include="InvertedIndex.hpp" />
+    <ClInclude Include="NamedPipeServer.hpp" />
     <ClInclude Include="Node.hpp" />
     <ClInclude Include="Posting.hpp" />
     <ClInclude Include="TokenContainer.hpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="Configure.cpp" />
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="InvertedIndex.cpp" />
+    <ClCompile Include="NamedPipe.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="TokenContainer.cpp" />

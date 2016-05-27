@@ -1,4 +1,5 @@
 #include "Configure.hpp"
+#include "NamedPipeServer.hpp"
 
 #include <iostream>
 #include <string>
@@ -10,9 +11,15 @@ using std::cin;
 
 int main()
 {
-	string path;
-	cout << "Corpus: ";
-	getline(cin , path);
-	initialize(path);
+	try
+	{
+		NamedPipeServer pipe(L"\\\\.\\pipe\\ir");
+		pipe.start();
+	}
+	catch (char const * exception)
+	{
+		cout << exception << '\n';
+	}
+	_getch();
 	return 0;
 }

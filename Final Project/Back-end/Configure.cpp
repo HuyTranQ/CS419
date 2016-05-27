@@ -38,7 +38,7 @@ void insert_document(directory_iterator & it)
 	}
 }
 
-void initialize(std::string const & corpus_path)
+void initialize(wchar_t const * corpus_path)
 {
 	if (!exists(corpus_path))
 	{

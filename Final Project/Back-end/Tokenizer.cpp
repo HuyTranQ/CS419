@@ -113,26 +113,8 @@ Tokenizer::Tokenizer()
 	cout << "Reading vocabulary and stop words: " << duration_cast<milliseconds>(finish - start).count() << "ms\n";
 }
 
-unsigned Tokenizer::merge(std::string const & path , InvertedIndex & inverted_index)
+void Tokenizer::execute(wchar const * it , wchar const * endit , InvertedIndex & inverted_index , unsigned document_id)
 {
-	//	Counter for document identifiers
-	static unsigned document_id = 0;
-	++document_id;
-
-	boost::iostreams::mapped_file reader(path , mapped_file::readonly);
-	if (!reader.is_open())
-	{	//	Reader cannot open file
-		cerr << "Cannot open \"" << path << "\" to execute lexcial analysis\n";
-		return document_id;
-	}
-
-
-	wchar const * it = 1 + reinterpret_cast<wchar const *>(reader.const_begin());
-	wchar const * endit = reinterpret_cast<wchar const *>(reader.const_end());
-	
-	if (it == nullptr || endit == nullptr || it == endit)
-		return document_id;
-
 	Token token;
 
 	auto not_character = character_.end();
@@ -159,7 +141,7 @@ unsigned Tokenizer::merge(std::string const & path , InvertedIndex & inverted_in
 				}
 				++it;
 			}
-			
+
 			if (it == endit)
 			{	//	End of file
 				separated = true;
@@ -231,6 +213,29 @@ unsigned Tokenizer::merge(std::string const & path , InvertedIndex & inverted_in
 			}
 		} while (separated);
 	}
+}
+
+unsigned Tokenizer::merge(std::string const & path , InvertedIndex & inverted_index)
+{
+	//	Counter for document identifiers
+	static unsigned document_id = 0;
+	++document_id;
+	boost::iostreams::mapped_file reader(path , mapped_file::readonly);
+	if (!reader.is_open())
+	{	//	Reader cannot open file
+		cerr << "Cannot open \"" << path << "\" to execute lexcial analysis\n";
+		return document_id;
+	}
+
+
+	wchar const * it = 1 + reinterpret_cast<wchar const *>(reader.const_begin());
+	wchar const * endit = reinterpret_cast<wchar const *>(reader.const_end());
+	
+	if (it == nullptr || endit == nullptr || it == endit)
+		return document_id;
+	
+	execute(it , endit , inverted_index , document_id);
+	
 	reader.close();
 	return document_id;
 }

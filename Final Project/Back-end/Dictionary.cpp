@@ -55,7 +55,7 @@ Dictionary & Dictionary::open()
 void Dictionary::learn_document(boost::filesystem::directory_iterator const & file)
 {
 	unsigned id = tokenizer.merge(file->path().string(), inverted_index);
-	document_[id] = Document(file->path().filename().string());
+	document_[id] = Document(file->path().filename().wstring());
 }
 
 void Dictionary::print(std::wofstream & output)
@@ -105,7 +105,7 @@ void Dictionary::construct_models()
 	}
 }
 
-RetrievalResult Dictionary::retrieve_documents(string const & path)
+RetrievalResult Dictionary::retrieve_documents(wchar const * query , wchar const * end)
 {
 	RetrievalResult result;
 
@@ -113,7 +113,7 @@ RetrievalResult Dictionary::retrieve_documents(string const & path)
 
 	// parse the query into tokens
 	InvertedIndex query_ii;
-	tokenizer.merge(path, query_ii);
+	tokenizer.execute(query , end , query_ii , 0);
 	// build the query vector
 	vector<float> query_vector((1 << 13), 0.0f);
 	float norm = 0.0f;
@@ -173,19 +173,19 @@ RetrievalResult Dictionary::retrieve_documents(string const & path)
 	return result;
 }
 
-string const & Dictionary::document_name(unsigned const & id)
+wstring const & Dictionary::document_name(unsigned const & id)
 {
 	return document_[id].name;
 }
 
 void RetrievalResult::print(ostream & output)
 {
-	output << ranked_retrieved_document_.size() << " results in " << retrieval_time << "ms\n";
+	/*output << ranked_retrieved_document_.size() << " results in " << retrieval_time << "ms\n";
 	unsigned counter = 1;
 	for (auto it = ranked_retrieved_document_.crbegin(), endit = ranked_retrieved_document_.crend(); it != endit; ++it, ++counter)
 	{
 		output << counter << ".\t\t\t" << Dictionary::open().document_name(it->second) << "\t" << it->first << "\n";
-	}
+	}*/
 }
 
 EvaluationResult Dictionary::evaluate_result(const RetrievalResult& rr)
@@ -217,6 +217,7 @@ EvaluationResult Dictionary::evaluate_result(const RetrievalResult& rr)
 		float recall = er.prec_recall_[size - 1].second;
 		er.f_measure = 2 * prec*recall / (prec + recall);
 	}
+	return er;
 }
 
 std::vector<std::pair<float, float>> EvaluationResult::get_prec_recall()

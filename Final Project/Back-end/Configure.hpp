@@ -2,4 +2,4 @@
 
 #include <string>
 
-void initialize(std::string const & corpus_path);
+void initialize(wchar_t const *);

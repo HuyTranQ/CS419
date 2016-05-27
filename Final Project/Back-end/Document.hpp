@@ -10,13 +10,13 @@ class Document
 {
 public:
 	Model model;
-	std::string name;
+	std::wstring name;
 
 	Document()
-		: name("unknown") , model(1 << 13 , 0.0f)
+		: name(L"unknown") , model(1 << 13 , 0.0f)
 	{}
 
-	Document(std::string const & name)
+	Document(std::wstring const & name)
 		: name(name) , model(1 << 13 , 0.0f)
 	{}
 };
